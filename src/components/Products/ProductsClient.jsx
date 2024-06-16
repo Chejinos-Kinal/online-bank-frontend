@@ -29,7 +29,7 @@ export const ProductsClient = ({ products = [] }) => {
           </div> */}
       <nav className="bg-custom-lightgray p-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img src={logo} alt="Logo" className="h-12 mr-4" />{' '}
+          <img src={logo} alt="Logo" className="h-12 mr-4" />
           {/* Ajusta la ruta del logo */}
           <span className="text-black text-lg font-bold">CASHFLOW</span>
         </div>
@@ -73,11 +73,11 @@ export const ProductsClient = ({ products = [] }) => {
           {/* Repetir para cada producto */}
 
           {products.map((product) => (
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div
-                key={product._id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden"
-              >
+            <div
+              key={product._id}
+              className="bg-white rounded-lg shadow-lg overflow-hidden"
+            >
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img
                   src={computer}
                   alt="Producto"
@@ -89,17 +89,17 @@ export const ProductsClient = ({ products = [] }) => {
                   </h3>
                   <p className="text-sm">
                     <span className="font-semibold">
-                      Descripción: {product.description}{' '}
+                      Descripción: {product.description}
                     </span>
                   </p>
                   <p className="text-sm">
                     <span className="font-semibold">
-                      Precio: {product.price}{' '}
+                      Precio: {product.price}
                     </span>
                   </p>
                   <p className="text-sm">
                     <span className="font-semibold">
-                      Categoría: {product.category.name}{' '}
+                      Categoría: {product.category.name}
                     </span>
                   </p>
                   <button className="mt-4 w-full bg-custom-pink text-white py-2 px-4 rounded">
@@ -186,7 +186,7 @@ export const ProductsClient = ({ products = [] }) => {
                     <button className="mt-4 w-full bg-custom-blue text-white py-2 px-4 rounded">
                       COMPRAR
                     </button>
-                  </div> 
+                  </div>  
                 </div>*/}
             </div>
           ))}

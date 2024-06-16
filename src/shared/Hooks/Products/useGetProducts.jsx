@@ -18,10 +18,10 @@ export const useGetProducts = () => {
       return toast.error(
         response?.err?.response?.data?.msg ||
           response?.err?.data?.msg ||
-          'Error al obtener las productos.',
+          'Error al obtener los productos.',
       );
     } else {
-      toast.success('Productos obtenidos correctamente.');
+      toast.success('Hoteles obtenidos correctamente.');
     }
 
     console.log(response);
