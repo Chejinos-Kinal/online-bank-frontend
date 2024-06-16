@@ -4,6 +4,8 @@ import computer from '../../../src/assets/computer.jpg';
 
 import { useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 export const ProductsClient = ({ products = [] }) => {
   console.log(products);
   const [product, setProduct] = useState({
@@ -32,12 +34,12 @@ export const ProductsClient = ({ products = [] }) => {
           <span className="text-black text-lg font-bold">CASHFLOW</span>
         </div>
         <div className="flex space-x-4">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="text-black px-4 py-2 rounded hover:bg-custom-lightblue hover:text-white"
           >
             Cuenta
-          </a>
+          </Link>
           <a
             href="#"
             className="text-white bg-custom-pink px-4 py-2 rounded hover:bg-custom-lightblue hover:text-white"

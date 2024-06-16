@@ -16,9 +16,13 @@ export const getProductsRequest = async () => {
   }
 };
 
-export const addProductRequest = async () => {
+export const addProductRequest = async (data) => {
   try {
+    return await apiClient.post('/user/add/product', data);
   } catch (err) {
-    error: true, err;
+    return {
+      error: true,
+      err,
+    };
   }
 };

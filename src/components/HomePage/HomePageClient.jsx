@@ -2,6 +2,8 @@ import React from 'react';
 import account from '../../../src/assets/account.jpeg';
 import logo from '../../../src/assets/logo.jpeg';
 
+import { Link } from 'react-router-dom';
+
 export const HomePageClient = () => {
   return (
     <div className="bg-custom-mint min-h-screen flex flex-col">
@@ -18,12 +20,12 @@ export const HomePageClient = () => {
           >
             Cuenta
           </a>
-          <a
-            href="#"
+          <Link
+            to="/productsClient/showProducts"
             className="text-black px-4 py-2 rounded hover:bg-custom-lightblue hover:text-white"
           >
             Ver productos
-          </a>
+          </Link>
           <a
             href="#"
             className="text-black px-4 py-2 rounded hover:bg-custom-lightblue hover:text-white"
