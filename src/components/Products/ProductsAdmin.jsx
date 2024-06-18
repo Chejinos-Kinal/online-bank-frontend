@@ -1,6 +1,129 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../../src/assets/logo.jpeg';
+
+import { Input } from './Input.jsx';
+import { Link } from 'react-router-dom';
+import { useSaveProducts } from '../../shared/Hooks/Products/useSaveProducts.jsx';
+
 export const ProductsAdmin = () => {
+  const { addProducts, isLoading } = useSaveProducts();
+
+  const [formData, setFormData] = useState({
+    name: {
+      value: '',
+      isValid: false,
+      showError: false,
+    },
+    description: {
+      value: '',
+      isValid: false,
+      showError: false,
+    },
+    price: {
+      value: '',
+      isValid: false,
+      showError: false,
+    },
+    stock: {
+      value: '',
+      isValid: false,
+      showError: false,
+    } /* ,
+      category: {
+        value: '',
+        isValid: false,
+        showError: false
+      } */,
+  });
+  const onValueChange = (value, field) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: {
+        ...prevData[field],
+        value,
+      },
+    }));
+  };
+
+  const handleValidationOnBlur = (value, field) => {
+    let isValid = false;
+    switch (field) {
+      case 'name':
+        isValid = value.length > 0;
+        break;
+      case 'description':
+        isValid = value.length > 0;
+        break;
+      case 'price':
+        isValid = value.length > 0;
+        break;
+      case 'stock':
+        isValid = value.length > 0;
+        break;
+      /* case 'category':
+        isValid = value.length > 0
+        break */
+      default:
+        break;
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: {
+        ...prevData[field],
+        isValid,
+        showError: !isValid,
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    addProducts(
+      formData.name.value,
+      formData.description.value,
+      formData.price.value,
+      formData.stock.value /* ,
+      formData.category.value */,
+    );
+
+    //Reset the form data
+    setFormData({
+      name: {
+        value: '',
+        isValid: false,
+        showError: false,
+      },
+      description: {
+        value: '',
+        isValid: false,
+        showError: false,
+      },
+      price: {
+        value: '',
+        isValid: false,
+        showError: false,
+      },
+      stock: {
+        value: '',
+        isValid: false,
+        showError: false,
+      } /* ,
+      category: {
+        value: '',
+        isValid: false,
+        showError: false
+      } */,
+    });
+  };
+
+  const isSubmitButtonDisable =
+    !formData.name.isValid ||
+    !formData.description.isValid ||
+    !formData.price.isValid ||
+    !formData.stock.isValid; /* ||
+     !formData.category.isValid */
+
   return (
     <div className="bg-custom-mint min-h-screen p-6">
       <header className="flex items-center justify-between p-4">
@@ -40,7 +163,7 @@ export const ProductsAdmin = () => {
         <h2 className="text-custom-blue text-2xl font-semibold mb-4">
           Gestiona la información de los productos
         </h2>
-        <form className="grid grid-cols-2 gap-6 mb-8">
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6 mb-8">
           <div className="col-span-1">
             <label
               className="block text-custom-blue font-semibold mb-2"
@@ -48,11 +171,15 @@ export const ProductsAdmin = () => {
             >
               Nombre del producto
             </label>
-            <input
+            <Input
+              field="name"
               type="text"
-              id="productName"
+              value={formData.name.value}
+              onChangeHandler={onValueChange}
+              onBlurHandler={handleValidationOnBlur}
+              showErrorMessage={formData.name.showError}
               className="w-full p-2 border border-gray-300 rounded"
-              defaultValue="Zapatos Tallmen"
+              /* defaultValue="Zapatos Tallmen" */
             />
           </div>
           <div className="col-span-1">
@@ -62,14 +189,17 @@ export const ProductsAdmin = () => {
             >
               Descripción
             </label>
-            <input
+            <Input
+              field="description"
               type="text"
-              id="description"
+              value={formData.description.value}
+              onChangeHandler={onValueChange}
+              onBlurHandler={handleValidationOnBlur}
+              showErrorMessage={formData.description.showError}
               className="w-full p-2 border border-gray-300 rounded"
-              defaultValue="Zapatos de talla 43 para hombre, formales."
             />
           </div>
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <label
               className="block text-custom-blue font-semibold mb-2"
               htmlFor="type"
@@ -83,7 +213,7 @@ export const ProductsAdmin = () => {
               <option>Producto</option>
               <option>Servicio</option>
             </select>
-          </div>
+          </div> */}
           <div className="col-span-1">
             <label
               className="block text-custom-blue font-semibold mb-2"
@@ -91,14 +221,52 @@ export const ProductsAdmin = () => {
             >
               Precio del producto
             </label>
-            <input
+            <Input
+              field="price"
               type="text"
-              id="price"
+              value={formData.price.value}
+              onChangeHandler={onValueChange}
+              onBlurHandler={handleValidationOnBlur}
+              showErrorMessage={formData.price.showError}
               className="w-full p-2 border border-gray-300 rounded"
-              defaultValue="Q400.00"
+              /* defaultValue="Q400.00" */
             />
           </div>
           <div className="col-span-1">
+            <label
+              className="block text-custom-blue font-semibold mb-2"
+              htmlFor="price"
+            >
+              Cantidad de Stock
+            </label>
+            <Input
+              field="stock"
+              type="text"
+              value={formData.stock.value}
+              onChangeHandler={onValueChange}
+              onBlurHandler={handleValidationOnBlur}
+              showErrorMessage={formData.stock.showError}
+              className="w-full p-2 border border-gray-300 rounded"
+            />
+          </div>
+
+          {/* <div className="col-span-1">
+            <label
+              className="block text-custom-blue font-semibold mb-2"
+              htmlFor="type"
+            >
+              Categoría
+            </label>
+            <select
+              id="type"
+              className="w-full p-2 border border-gray-300 rounded"
+            >
+              <option>Sports</option>
+              <option>General</option>
+            </select>
+          </div> */}
+
+          {/* <div className="col-span-1">
             <label
               className="block text-custom-blue font-semibold mb-2"
               htmlFor="soldCount"
@@ -112,15 +280,15 @@ export const ProductsAdmin = () => {
               defaultValue="7 veces"
               readOnly
             />
-          </div>
-          <div className="col-span-1">
+          </div> */}
+          {/* <div className="col-span-1">
             <label
               className="block text-custom-blue font-semibold mb-2"
               htmlFor="creationDate"
             >
               Fecha de Creación
             </label>
-            <input
+            <Input
               type="text"
               id="creationDate"
               className="w-full p-2 border border-gray-300 rounded"
@@ -140,19 +308,24 @@ export const ProductsAdmin = () => {
               className="w-full p-2 border border-gray-300 rounded"
               defaultValue="email@janesfakedomain.net"
             />
-          </div>
-        </form>
-        <div className="flex space-x-4">
-          <button className="bg-custom-blue text-white py-2 px-4 rounded">
-            Agregar
-          </button>
-          <button className="bg-custom-lightblue text-white py-2 px-4 rounded">
+          </div> */}
+
+          <div className="flex space-x-4">
+            <button
+              type="submit"
+              /* disabled= {isSubmitButtonDisable} */ className="bg-custom-blue text-white py-2 px-4 rounded"
+            >
+              Agregar
+            </button>
+            {/*  <button className="bg-custom-lightblue text-white py-2 px-4 rounded">
             Editar
           </button>
           <button className="bg-custom-pink text-white py-2 px-4 rounded">
             Eliminar
-          </button>
-        </div>
+          </button> */}
+          </div>
+        </form>
+
         <div className="mt-8">
           <h2 className="text-custom-blue text-2xl font-semibold mb-4">
             Lista de usuarios

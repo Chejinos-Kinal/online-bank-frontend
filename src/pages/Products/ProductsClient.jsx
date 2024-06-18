@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { ProductsClient } from '../../components/Products/ProductsClient';
-
+import { ShowProducts } from '../../components/Products/ShowProducts';
 export const ProductsClient = () => {
   return (
     <div>
-      <ProductsClient />
+      <ShowProducts />
     </div>
   );
 };

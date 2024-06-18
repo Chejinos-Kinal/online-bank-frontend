@@ -1,6 +1,6 @@
 import { HomePageForClient } from './pages/HomePage/HomePageForClient';
 import { Products } from './pages/Products/Products';
-import { ProductsClient } from './components/Products/ProductsClient';
+import { ProductsClient } from './pages/Products/ProductsClient';
 export const routes = [
   {
     path: '/',
@@ -11,7 +11,7 @@ export const routes = [
     element: <Products />,
   },
   {
-    path: '/productsClient',
+    path: '/productsClient/*',
     element: <ProductsClient />,
   },
 ];
