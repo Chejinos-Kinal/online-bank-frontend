@@ -10,6 +10,7 @@ export const Input = ({
   className,
   defaultValue,
   textarea,
+  options,
 }) => {
   const handleValueChange = (e) => {
     onChangeHandler(e.target.value, field);
@@ -34,6 +35,22 @@ export const Input = ({
           className={className}
           defaultValue={defaultValue}
         />
+      ) : type === 'select' ? (
+        <select
+          value={value || ''}
+          onChange={handleValueChange}
+          onBlur={handleInputBlur}
+          className={className}
+          /* defaultValue={defaultValue} */
+        >
+          <option value="">Seleccione una opción</option>
+          {options &&
+            options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+        </select>
       ) : (
         <input
           type={type}

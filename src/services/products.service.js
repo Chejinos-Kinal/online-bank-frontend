@@ -5,9 +5,9 @@ const apiClient = axios.create({
   timeout: 5000,
 });
 
-export const getProductsRequest = async () => {
+export const addProductRequest = async (data) => {
   try {
-    return await apiClient.get('/user/products');
+    return await apiClient.post('/user/add/product', data);
   } catch (err) {
     return {
       error: true,
@@ -16,9 +16,9 @@ export const getProductsRequest = async () => {
   }
 };
 
-export const addProductRequest = async (data) => {
+export const getProductsRequest = async () => {
   try {
-    return await apiClient.post('/user/add/product', data);
+    return await apiClient.get('/user/products');
   } catch (err) {
     return {
       error: true,

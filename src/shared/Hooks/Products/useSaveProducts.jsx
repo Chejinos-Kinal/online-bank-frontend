@@ -5,19 +5,14 @@ import { addProductRequest } from '../../../services/products.service';
 export const useSaveProducts = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const addProducts = async (
-    name,
-    description,
-    price,
-    stock /* , category */,
-  ) => {
+  const addProducts = async (name, description, price, stock, category) => {
     setIsLoading(true);
     const product = {
       name,
       description,
       price,
-      stock /* ,
-      category */,
+      stock,
+      category,
     };
 
     try {

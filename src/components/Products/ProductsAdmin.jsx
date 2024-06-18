@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../../src/assets/logo.jpeg';
-
+import { getCategoryRequest } from '../../services/category.service.js';
 import { Input } from './Input.jsx';
 import { Link } from 'react-router-dom';
 import { useSaveProducts } from '../../shared/Hooks/Products/useSaveProducts.jsx';
@@ -28,13 +28,33 @@ export const ProductsAdmin = () => {
       value: '',
       isValid: false,
       showError: false,
-    } /* ,
-      category: {
-        value: '',
-        isValid: false,
-        showError: false
-      } */,
+    },
+    category: {
+      value: '',
+      isValid: false,
+      showError: false,
+    },
   });
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await getCategoryRequest();
+        if (Array.isArray(categoriesResponse.data)) {
+          setCategories(categoriesResponse.data);
+        } else {
+          console.error('Error al obtener categorías:', categoriesResponse);
+        }
+      } catch (error) {
+        console.error('Error al obtener las categorías', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const onValueChange = (value, field) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -60,9 +80,9 @@ export const ProductsAdmin = () => {
       case 'stock':
         isValid = value.length > 0;
         break;
-      /* case 'category':
-        isValid = value.length > 0
-        break */
+      case 'category':
+        isValid = value.length > 0;
+        break;
       default:
         break;
     }
@@ -83,8 +103,8 @@ export const ProductsAdmin = () => {
       formData.name.value,
       formData.description.value,
       formData.price.value,
-      formData.stock.value /* ,
-      formData.category.value */,
+      formData.stock.value,
+      formData.category.value,
     );
 
     //Reset the form data
@@ -108,12 +128,12 @@ export const ProductsAdmin = () => {
         value: '',
         isValid: false,
         showError: false,
-      } /* ,
+      },
       category: {
         value: '',
         isValid: false,
-        showError: false
-      } */,
+        showError: false,
+      },
     });
   };
 
@@ -121,8 +141,8 @@ export const ProductsAdmin = () => {
     !formData.name.isValid ||
     !formData.description.isValid ||
     !formData.price.isValid ||
-    !formData.stock.isValid; /* ||
-     !formData.category.isValid */
+    !formData.stock.isValid ||
+    !formData.category.isValid;
 
   return (
     <div className="bg-custom-mint min-h-screen p-6">
@@ -248,6 +268,40 @@ export const ProductsAdmin = () => {
               showErrorMessage={formData.stock.showError}
               className="w-full p-2 border border-gray-300 rounded"
             />
+          </div>
+
+          <div className="col-span-1">
+            <label
+              htmlFor="category"
+              className="block text-custom-blue font-semibold mb-2"
+            >
+              Tipos de Categorías
+            </label>
+            <select
+              value={formData.category.value}
+              onChange={(e) => {
+                const categoryName =
+                  categories.find((cat) => cat._id === e.target.value)?.name ||
+                  '';
+                onValueChange(categoryName, 'category');
+              }}
+              onBlur={(e) => {
+                const categoryName =
+                  categories.find((cat) => cat._id === e.target.value)?.name ||
+                  '';
+                handleValidationOnBlur(categoryName, 'category');
+              }}
+              name="category"
+              id="category"
+              className="w-full p-2 border border-gray-300 rounded"
+            >
+              <option value="">Seleccione una categoría</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* <div className="col-span-1">
